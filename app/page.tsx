@@ -1,8 +1,6 @@
-"use client";
+ import{ stays } from "../lib/stays";
+ import Searchbar from "../components/Searchbar";
 
-import { useState } from "react";
-import { stays } from "../lib/stays";
-import StayCard from "../components/StayCard";
 
 // TODO (Task 1 — Server vs Client Components): this ENTIRE page is a Client Component
 // ("use client" at the top) only because of the search box's useState. That ships the
@@ -16,26 +14,10 @@ import StayCard from "../components/StayCard";
 //
 // Decide where the filtering lives and what stays on the server vs the client.
 export default function HomePage() {
-  const [query, setQuery] = useState("");
-
-  const visible = stays.filter((s) =>
-    (s.name + " " + s.location).toLowerCase().includes(query.toLowerCase())
-  );
-
-  return (
+   return (
     <section>
-      <h1>Find a place to stay</h1>
-      <input
-        className="search"
-        placeholder="Search by name or city…"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <div className="grid">
-        {visible.map((s) => (
-          <StayCard key={s.id} stay={s} />
-        ))}
-      </div>
+       <h1> Find a place to stay</h1>
+        <Searchbar stays={stays} />
     </section>
   );
 }

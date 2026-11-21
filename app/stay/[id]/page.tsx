@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 import { getStay } from "../../../lib/stays";
 
 // TODO (Task 2 — dynamic routes & not-found): this page is broken in two ways.
@@ -10,9 +12,14 @@ import { getStay } from "../../../lib/stays";
 //
 // TODO (Task 3 — images): swap the <img> for next/image. This is the hero image, so give
 // it `priority` (it's above the fold) plus width/height.
+export default async function StayPage({params,}: {params: Promise<{id: string}>}) {
+  const { id } = await params;
+  const stay = await getStay(id);
 
-export default function StayPage({ params }: { params: { id: string } }) {
-  const stay = getStay(params.id);
+  if (!stay) {
+    notFound();
+  }
+ 
 
   return (
     <article className="detail">
